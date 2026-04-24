@@ -406,12 +406,17 @@ def _run_pipeline(argv: list[str] | None) -> int:
     any_succeeded = any(not failures[p.name] for p in pptxs)
 
     if any_succeeded:
-        ok(f"Combined notes: {combined_md}")
+        final_dir = combined_md.parent
+        have_pdfs = not pdf.check_tools()
+        fmt_label = "markdown + PDF" if have_pdfs else "markdown only (PDFs skipped)"
+        ok(f"All notes are available at: {final_dir} ({fmt_label})")
+        info(f"  combined: combined_notes.md{' + combined_notes.pdf' if have_pdfs else ''}")
         for pptx in pptxs:
             if failures[pptx.name]:
                 continue
             per = per_file_mds[per_pptx_dirs[pptx.name].name]
-            info(f"  per-file: {per}")
+            stem = per.stem
+            info(f"  per-file: {stem}.md{f' + {stem}.pdf' if have_pdfs else ''}")
 
     if any_failed:
         warn("Some files did not complete:")
