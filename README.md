@@ -88,14 +88,41 @@ If you only have one Google account, you can enter the same key for STAGES12 and
 
 ## Use
 
+### 1. Make a folder for the unit
+
 ```bash
 mkdir ~/Desktop/blockchain-unit-3
 cd ~/Desktop/blockchain-unit-3
 ```
 
-Drop your lecture decks into the folder, naming them `file_1.pptx`, `file_2.pptx`, etc. PDFs work too — `file_2.pdf` is treated the same as `file_2.pptx`. You can mix them freely (e.g. `file_1.pptx`, `file_2.pdf`, `file_3.pptx`).
+### 2. Put your lecture materials inside, renamed to `file_N.pptx` or `file_N.pdf`
 
-Then:
+clevernotes looks for files matching the pattern `file_<N>.pptx` or `file_<N>.pdf` in the current folder (case-insensitive). Anything with a different name is ignored. **You must rename your decks** before running the tool.
+
+Rules:
+- The number `N` must start at `1` and increment (`file_1`, `file_2`, `file_3`, ...).
+- `N` controls ordering in `combined_notes.md` — `file_1` appears first, `file_2` second, etc. Number them in the order you want to study them.
+- `.pptx` and `.pdf` are treated identically — you can mix them freely in the same folder (e.g. `file_1.pptx`, `file_2.pdf`, `file_3.pptx`).
+- Don't use both `file_3.pptx` *and* `file_3.pdf` in the same folder — the tool will error out rather than pick one for you.
+
+Example — renaming downloaded lecture decks from Moodle/Blackboard:
+
+```bash
+mv "Lecture 1 - Intro to Consensus.pptx"          file_1.pptx
+mv "Lecture 2 - Proof of Work (slides).pdf"       file_2.pdf
+mv "Lecture 3 - Byzantine Fault Tolerance.pptx"   file_3.pptx
+```
+
+After renaming, your folder should look like this:
+
+```
+~/Desktop/blockchain-unit-3/
+├── file_1.pptx
+├── file_2.pdf
+└── file_3.pptx
+```
+
+### 3. Run it
 
 ```bash
 clevernotes
