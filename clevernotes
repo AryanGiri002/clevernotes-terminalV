@@ -11,6 +11,14 @@ if [ ! -d "$VENV" ]; then
   exit 1
 fi
 
+# macOS: BasicTeX adds /Library/TeX/texbin via /etc/paths.d/, but that's only
+# picked up by new login shells. If the user ran install.sh and `clevernotes`
+# in the same terminal, xelatex won't be on PATH and Stage 4 (md→PDF) skips.
+# Refresh PATH via path_helper so the launcher self-heals.
+if [ "$(uname -s)" = "Darwin" ] && [ -x /usr/libexec/path_helper ]; then
+  eval "$(/usr/libexec/path_helper -s)"
+fi
+
 # shellcheck disable=SC1091
 . "$VENV/bin/activate"
 
