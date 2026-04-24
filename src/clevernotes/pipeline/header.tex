@@ -1,0 +1,37 @@
+% Minimal LaTeX preamble overrides for clevernotes → PDF conversion.
+% Kept small so it works with BasicTeX (~100 MB) without extra packages.
+
+% Fit images to text width and never overflow the page.
+\usepackage{graphicx}
+\setkeys{Gin}{width=0.85\linewidth,keepaspectratio}
+
+% Keep figures exactly where they appear in the source. By default LaTeX
+% treats `figure` as a float and may shuffle images to the top/bottom of
+% nearby pages — which breaks the "slide image immediately above its notes"
+% reading flow we want, and also causes consecutive images to pack
+% side-by-side on a float row (overflowing the page width when both are
+% full-width slides). The `float` package adds the [H] specifier ("here,
+% really, don't float me") and `\floatplacement{figure}{H}` makes it the
+% default for every figure pandoc generates. BasicTeX includes `float.sty`.
+\usepackage{float}
+\floatplacement{figure}{H}
+
+% Slightly airier line spacing for dense study notes.
+\linespread{1.1}
+
+% Force the TOC onto its own page(s) — nothing else shares the page.
+% Equivalent to pandoc's `toc-own-page` variable, which was added in pandoc
+% 2.18; this override works on older versions too (the user's pandoc is
+% 2.12). We wrap \tableofcontents in a \clearpage…\clearpage pair so the
+% TOC starts on a fresh page AND the first real content also starts fresh.
+\let\cleverorigtableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{%
+  \clearpage
+  \cleverorigtableofcontents
+  \clearpage
+}
+
+% NOTE: long lines in code blocks won't wrap on vanilla BasicTeX. If you
+% want them to, install fvextra (sudo tlmgr install fvextra) and add:
+%   \usepackage{fvextra}
+%   \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}

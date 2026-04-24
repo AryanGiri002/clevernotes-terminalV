@@ -1,0 +1,42 @@
+# OS clutter
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments (the installer builds these; never commit one)
+venv/
+.venv/
+env/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Pipeline output (generated artifacts — anywhere in the tree)
+NOTES/
+
+# Local scratch folder — contains private lecture decks + their generated
+# NOTES/, never committed.
+test/
+
+# Defensive: local lecture materials at any depth. Pipeline's input format is
+# file_N.pptx / file_N.pdf — those are user-private course decks.
+**/file_*.pptx
+**/file_*.pdf
+
+# Secrets: config.env lives outside the repo by design (~/.config/clevernotes
+# on mac/linux, %APPDATA%\clevernotes on Windows), but ignore defensively in
+# case anyone drops a copy inside the repo.
+config.env
+.env
+*.env.local

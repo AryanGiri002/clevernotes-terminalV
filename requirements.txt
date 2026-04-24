@@ -1,0 +1,4 @@
+google-genai>=1.0.0
+pdf2image>=1.17.0
+Pillow>=10.0.0
+rich>=13.7.0

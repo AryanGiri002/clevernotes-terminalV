@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# clevernotes launcher — activates the venv and runs the CLI module from the user's CWD.
+set -e
+
+CN_HOME="${CLEVERNOTES_HOME:-$HOME/.local/share/clevernotes}"
+VENV="$CN_HOME/venv"
+
+if [ ! -d "$VENV" ]; then
+  echo "clevernotes: venv not found at $VENV" >&2
+  echo "re-run install.sh to set things up." >&2
+  exit 1
+fi
+
+# shellcheck disable=SC1091
+. "$VENV/bin/activate"
+
+export PYTHONPATH="$CN_HOME/src:${PYTHONPATH:-}"
+exec python -m clevernotes "$@"
